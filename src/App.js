@@ -6,7 +6,7 @@ import AllEmployees from './AllEmployees';
 
 const Container = styled.div`
   text-align: center;
-  margin: 0;
+  margin: 10px auto;
   padding: 0;
   font-family: sans-serif;
 `
@@ -15,7 +15,7 @@ const Header = styled.div`
   background: center no-repeat url('https://bondlinkcdn.com/128/Cloudgate_2-cropped.ioy2OWJ4Xz.jpg');
   background-size: contain;
   height: 150px;
-  padding: 20px;
+  padding: 50px 0;
   width: 100%;
   display: table;
 `
