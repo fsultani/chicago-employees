@@ -1,51 +1,25 @@
-import React, { Component } from 'react';
-import { Container, Row, Col } from 'react-grid-system';
+import React from 'react';
 
-import axios from 'axios';
+const FilterByDepartment = ({ data, onChange }) => {
+  let department = [...new Set(data.map(d => d.department))]
 
-class AllEmployees extends Component {
-  constructor() {
-    super()
-    this.state = {
-      loading: true,
-      filteredView: null,
-    }
-  }
-  componentDidMount() {
-    axios.get('https://dt-interviews.appspot.com')
-    .then(res => this.setState({
-      loading: false,
-      data: res.data,
-      filteredView: res.data,
-    }))
+  const handleChange = ({ target }) => {
+    const department = target.value
+    const filteredView = data.filter(d => d.department === department)
+    onChange(filteredView)
   }
 
-  handleChange = (event) => {
-    const department = event.target.value
-    const filteredView = this.state.data.filter(d => d.department === department)
-    // filteredView.length > 0 ?
-    // this.setState({ filteredView }) :
-    // this.setState({ filteredView: this.state.data })
-  }
-
-  filterByDepartment() {
-    let department = [...new Set(this.props.data.map(d => d.department))]
-    return (
-      <select onChange={this.handleChange}>
-        <option value="all">ALL</option>
-        {department.map(dept => <option value={dept}>{dept}</option>)}
-      </select>
-    )
-  }
-
-  render() {
-    return (
-      <div>
-        <div>Filter by department</div>
-        <div>{this.filterByDepartment()}</div>
-      </div>
-    );
-  }
+  return (
+    <select onChange={handleChange}>
+      <option value="all">ALL</option>
+      {department.map(dept => <option value={dept}>{dept}</option>)}
+    </select>
+  )
 }
 
-export default AllEmployees;
+export default (props => (
+  <div>
+    <div>Filter by department</div>
+    <div><FilterByDepartment {...props} /></div>
+  </div>
+))

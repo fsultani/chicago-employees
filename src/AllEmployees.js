@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { Container, Row, Col } from 'react-grid-system';
 import Lottie from 'react-lottie';
 import * as animationData from './loader.json'
-
 import axios from 'axios';
+
+import Filter from './Filter';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -46,22 +47,10 @@ class AllEmployees extends Component {
     }))
   }
 
-  handleChange = (event) => {
-    const department = event.target.value
-    const filteredView = this.state.data.filter(d => d.department === department)
-    filteredView.length > 0 ?
-    this.setState({ filteredView }) :
+  handleChange = (option) => {
+    option.length > 0 ?
+    this.setState({ filteredView: option }) :
     this.setState({ filteredView: this.state.data })
-  }
-
-  filterByDepartment() {
-    let department = [...new Set(this.state.data.map(d => d.department))]
-    return (
-      <select onChange={this.handleChange}>
-        <option value="all">ALL</option>
-        {department.map(dept => <option value={dept}>{dept}</option>)}
-      </select>
-    )
   }
 
   listOfEmployees() {
@@ -90,13 +79,6 @@ class AllEmployees extends Component {
     }
     return (
       <Container>
-        {!this.state.loading &&
-          <div>
-            <div>Filter by department</div>
-            <div>{this.filterByDepartment()}</div>
-          </div>
-        }
-        <Row>
         {this.state.loading &&
           <Lottie
             options={defaultOptions}
@@ -104,8 +86,21 @@ class AllEmployees extends Component {
             width={400}
           />
         }
-        {!this.state.loading && this.listOfEmployees()}
-        </Row>
+        {!this.state.loading &&
+          <Container>
+            <Row>
+              <Col>
+                <Filter
+                  data={this.state.data}
+                  onChange={this.handleChange}
+                />
+              </Col>
+            </Row>
+            <Row>
+              {this.listOfEmployees()}
+            </Row>
+          </Container>
+        }
       </Container>
     );
   }
