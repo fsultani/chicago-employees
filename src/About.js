@@ -7,8 +7,6 @@ import Lottie from 'react-lottie';
 import * as animationData from './loader.json'
 import axios from 'axios';
 
-import Filter from './Filter';
-
 const Wrapper = styled.div`
   width: 100%;
   background: #D3D3D3;
@@ -25,14 +23,11 @@ const Wrapper = styled.div`
   transition: opacity 150ms ease;
 `
 
-const Name = styled.h1`
+const Name = styled.p`
   font-size: 16px;
 `
 
-const JobTitle = styled.p`
-  font-size: 12px;
-`
-class AllEmployees extends Component {
+class AboutEmployee extends Component {
   constructor() {
     super()
     this.state = {
@@ -41,34 +36,36 @@ class AllEmployees extends Component {
     }
   }
   componentDidMount() {
-    axios.get('https://dt-interviews.appspot.com')
-    .then(res => this.setState({
-      loading: false,
-      data: res.data,
-      filteredView: res.data,
-    }))
+    const employeeId = document.location.pathname.split('/')[2]
+    axios.get(`https://dt-interviews.appspot.com/${employeeId}`)
+    .then(res => {
+      console.log("res.data\n", res.data)
+      this.setState({
+        loading: false,
+        ...res.data,
+      })
+    })
   }
 
-  handleChange = (option) => {
-    option.length > 0 ?
-    this.setState({ filteredView: option }) :
-    this.setState({ filteredView: this.state.data })
-  }
-
-  listOfEmployees() {
-    return this.state.filteredView.map(e =>
-      <Col sm={4}>
-        <Link to={`/employee/${e.id}`}>
-          <Wrapper>
-            <Name>
-              {e.name}
-            </Name>
-            <JobTitle>
-              {e.job_titles}
-            </JobTitle>
-          </Wrapper>
-        </Link>
-      </Col>
+  employeeDetails() {
+    return (
+      <Container>
+        <Name>
+          ID: {this.state.id}
+        </Name>
+        <Name>
+          Name: {this.state.name}
+        </Name>
+        <Name>
+          Job Title: {this.state.job_titles}
+        </Name>
+        <Name>
+          Salary: {this.state.employee_annual_salary}
+        </Name>
+        <Name>
+          Department: {this.state.department}
+        </Name>
+      </Container>
     )
   }
 
@@ -93,15 +90,7 @@ class AllEmployees extends Component {
         {!this.state.loading &&
           <Container>
             <Row>
-              <Col>
-                <Filter
-                  data={this.state.data}
-                  onChange={this.handleChange}
-                />
-              </Col>
-            </Row>
-            <Row>
-              {this.listOfEmployees()}
+              {this.employeeDetails()}
             </Row>
           </Container>
         }
@@ -110,4 +99,4 @@ class AllEmployees extends Component {
   }
 }
 
-export default AllEmployees;
+export default AboutEmployee;
