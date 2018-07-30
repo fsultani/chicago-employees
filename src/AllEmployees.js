@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-
 import styled from 'styled-components'
 import { Container, Row, Col } from 'react-grid-system';
 import Lottie from 'react-lottie';
-import * as animationData from './loader.json'
 import axios from 'axios';
 
+import * as animationData from './loader.json'
 import Filter from './Filter';
 
 const Wrapper = styled.div`
@@ -23,6 +22,10 @@ const Wrapper = styled.div`
   padding: 10px 0;
   cursor: pointer;
   transition: opacity 150ms ease;
+
+  &:focus {
+    background-color: red;
+  }
 `
 
 const Name = styled.h1`
@@ -38,9 +41,17 @@ class AllEmployees extends Component {
     this.state = {
       loading: true,
       filteredView: null,
+      tabIndexValue: 0,
     }
   }
   componentDidMount() {
+    document.addEventListener("keypress", function(event) {
+      console.log("event\n", event)
+      if (event.keyCode == 13) {
+          alert('hi.')
+      }
+    })
+
     axios.get('https://dt-interviews.appspot.com')
     .then(res => this.setState({
       loading: false,
@@ -55,20 +66,47 @@ class AllEmployees extends Component {
     this.setState({ filteredView: this.state.data })
   }
 
+  handleKeyPress = (e) => {
+    const links = document.getElementsByClassName('Link')
+    let active = document.activeElement.tabIndex
+    console.log("this.state.tabIndexValue\n", this.state.tabIndexValue)
+    // if (e.keyCode === 39) {
+    //   this.setState({
+    //     tabIndexValue: this.state.tabIndexValue + 1
+    //   })
+    // }
+  }
+
   listOfEmployees() {
-    return this.state.filteredView.map(e =>
-      <Col sm={4}>
-        <Link to={`/employee/${e.id}`}>
-          <Wrapper>
-            <Name>
-              {e.name}
-            </Name>
-            <JobTitle>
-              {e.job_titles}
-            </JobTitle>
-          </Wrapper>
-        </Link>
-      </Col>
+    const results = [];
+    while (this.state.filteredView.length) {
+      results.push(this.state.filteredView.splice(0, 3))
+    }
+    return results.map(result =>
+      <Row
+        style={{display: 'contents'}}
+        onKeyDown={this.handleKeyPress}
+        tabIndex="0"
+      >
+        {result.map(e =>
+          <Col sm={4}>
+            <Link
+              to={`/employee/${e.id}`}
+              style={{textDecoration: 'none', color: 'black'}}
+              className="Link"
+            >
+              <Wrapper>
+                <Name>
+                  {e.name}
+                </Name>
+                <JobTitle>
+                  {e.job_titles}
+                </JobTitle>
+              </Wrapper>
+            </Link>
+          </Col>
+        )}
+      </Row>
     )
   }
 

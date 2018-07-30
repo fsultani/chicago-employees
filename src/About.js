@@ -16,15 +16,11 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 50px;
-  margin: 10px 0;
-  padding: 10px 0;
-  cursor: pointer;
-  transition: opacity 150ms ease;
 `
 
-const Name = styled.p`
+const Field = styled.p`
   font-size: 16px;
+  text-align: left;
 `
 
 class AboutEmployee extends Component {
@@ -39,7 +35,6 @@ class AboutEmployee extends Component {
     const employeeId = document.location.pathname.split('/')[2]
     axios.get(`https://dt-interviews.appspot.com/${employeeId}`)
     .then(res => {
-      console.log("res.data\n", res.data)
       this.setState({
         loading: false,
         ...res.data,
@@ -49,23 +44,23 @@ class AboutEmployee extends Component {
 
   employeeDetails() {
     return (
-      <Container>
-        <Name>
+      <Wrapper>
+        <Field>
           ID: {this.state.id}
-        </Name>
-        <Name>
+        </Field>
+        <Field>
           Name: {this.state.name}
-        </Name>
-        <Name>
+        </Field>
+        <Field>
           Job Title: {this.state.job_titles}
-        </Name>
-        <Name>
+        </Field>
+        <Field>
           Salary: {this.state.employee_annual_salary}
-        </Name>
-        <Name>
+        </Field>
+        <Field>
           Department: {this.state.department}
-        </Name>
-      </Container>
+        </Field>
+      </Wrapper>
     )
   }
 
@@ -79,7 +74,7 @@ class AboutEmployee extends Component {
       }
     }
     return (
-      <Container>
+      <div>
         {this.state.loading &&
           <Lottie
             options={defaultOptions}
@@ -94,7 +89,7 @@ class AboutEmployee extends Component {
             </Row>
           </Container>
         }
-      </Container>
+      </div>
     );
   }
 }
