@@ -87,8 +87,8 @@ class AllEmployees extends Component {
     return results.map(result =>
       <Row
         style={{display: 'contents'}}
-        onKeyDown={this.handleKeyPress}
-        tabIndex="0"
+        // onKeyDown={this.handleKeyPress}
+        // tabIndex="0"
       >
         {result.map(e =>
           <Col sm={4}>
@@ -96,7 +96,7 @@ class AllEmployees extends Component {
               to={`/employee/${e.id}`}
               style={{textDecoration: 'none', color: 'black'}}
               className="Link"
-              id={e.id}
+              // id={e.id}
             >
               <Wrapper>
                 <Name>
@@ -135,9 +135,11 @@ class AllEmployees extends Component {
           <Container>
             <Row>
               <Col>
+              {console.log("this.state.data\n", this.state.data)}
                 <Filter
                   data={this.state.data}
                   onChange={this.handleChange}
+                  test="testing..."
                 />
               </Col>
             </Row>

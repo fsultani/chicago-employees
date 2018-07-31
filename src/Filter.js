@@ -59,6 +59,7 @@ const FilterByDepartment = ({ data, onChange }) => {
 
 export default (props => (
   <div>
+  {console.log("props\n", props)}
     <Title>Filter by department</Title>
     <Container><FilterByDepartment {...props} /></Container>
   </div>
