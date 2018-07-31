@@ -61,12 +61,22 @@ class AllEmployees extends Component {
 
   handleKeyPress = (e) => {
     const link = document.getElementsByClassName('Link')
-    if (e.keyCode === 39) {
-      const targetId = parseInt(e.target.id) - 1
-      link[targetId + 1].focus()
-    } else if (e.keyCode === 37) {
-      const targetId = parseInt(e.target.id) - 1
-      link[targetId - 1].focus()
+    let targetId = parseInt(e.target.id) - 1
+    switch(e.keyCode) {
+      case 39:
+        link[targetId + 1].focus()
+        break;
+      case 37:
+        link[targetId - 1].focus()
+        break;
+      case 40:
+        link[targetId + 3].focus()
+        break;
+      case 38:
+        link[targetId - 3].focus()
+        break;
+      default:
+        break;
     }
   }
 
