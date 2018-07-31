@@ -69,14 +69,38 @@ class AllEmployees extends Component {
         link[targetId - 1].focus()
         break;
       case 40:
-        targetId === this.state.filteredView.length - 1 ?
+        (
+          targetId === this.state.filteredView.length - 1 ||
+          targetId === this.state.filteredView.length - 2 ||
+          targetId === this.state.filteredView.length - 3
+        ) ?
         link[0].focus() :
         link[targetId + 3].focus()
         break;
       case 38:
-        targetId === 0 ?
-        link[this.state.filteredView.length - 1].focus() :
-        link[targetId - 3].focus()
+        if (targetId === 0) {
+          link[this.state.filteredView.length - 1].focus()
+        } else if (targetId === 1) {
+          link[this.state.filteredView.length - 2].focus()
+        } else if (targetId === 2) {
+          link[this.state.filteredView.length - 3].focus()
+        }
+
+        // targetId === 0 ?
+        // link[this.state.filteredView.length - 1].focus() :
+        // link[targetId - 3].focus()
+
+        // targetId === 1 ?
+        // link[this.state.filteredView.length - 2].focus() :
+        // link[targetId - 3].focus()
+
+        // targetId === 2 ?
+        // link[this.state.filteredView.length - 3].focus() :
+        // link[targetId - 3].focus()
+
+        // (targetId === 0 || targetId === 1 || targetId === 2) ?
+        // link[this.state.filteredView.length - 1].focus() :
+        // link[targetId - 3].focus()
         break;
       default:
         break;
