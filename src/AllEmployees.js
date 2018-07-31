@@ -56,7 +56,7 @@ class AllEmployees extends Component {
 
   handleKeyPress = (e) => {
     const link = document.getElementsByClassName('Link')
-    let targetId = parseInt(e.target.id) - 1
+    let targetId = parseInt(e.target.id)
     switch(e.keyCode) {
       case 39:
         targetId === this.state.filteredView.length - 1 ?
@@ -84,7 +84,7 @@ class AllEmployees extends Component {
   }
 
   listOfEmployees() {
-    return this.state.filteredView.map(e =>
+    return this.state.filteredView.map((employee, index) =>
       <Row
         style={{display: 'contents'}}
         onKeyDown={this.handleKeyPress}
@@ -92,17 +92,17 @@ class AllEmployees extends Component {
       >
         <Col sm={4}>
           <Link
-            to={`/employee/${e.id}`}
+            to={`/employee/${employee.id}`}
             style={{textDecoration: 'none', color: 'black'}}
             className="Link"
-            id={e.id}
+            id={index}
           >
             <Wrapper>
               <Name>
-                {e.name}
+                {employee.name}
               </Name>
               <JobTitle>
-                {e.job_titles}
+                {employee.job_titles}
               </JobTitle>
             </Wrapper>
           </Link>
