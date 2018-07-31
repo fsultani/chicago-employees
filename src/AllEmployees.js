@@ -41,7 +41,6 @@ class AllEmployees extends Component {
     this.state = {
       loading: true,
       filteredView: null,
-      tabIndexValue: 0,
     }
   }
   componentDidMount() {
