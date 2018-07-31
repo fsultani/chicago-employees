@@ -45,13 +45,6 @@ class AllEmployees extends Component {
     }
   }
   componentDidMount() {
-    document.addEventListener("keypress", function(event) {
-      console.log("event\n", event)
-      if (event.keyCode == 13) {
-          alert('hi.')
-      }
-    })
-
     axios.get('https://dt-interviews.appspot.com')
     .then(res => this.setState({
       loading: false,
@@ -67,14 +60,14 @@ class AllEmployees extends Component {
   }
 
   handleKeyPress = (e) => {
-    const links = document.getElementsByClassName('Link')
-    let active = document.activeElement.tabIndex
-    console.log("this.state.tabIndexValue\n", this.state.tabIndexValue)
-    // if (e.keyCode === 39) {
-    //   this.setState({
-    //     tabIndexValue: this.state.tabIndexValue + 1
-    //   })
-    // }
+    const link = document.getElementsByClassName('Link')
+    if (e.keyCode === 39) {
+      const targetId = parseInt(e.target.id) - 1
+      link[targetId + 1].focus()
+    } else if (e.keyCode === 37) {
+      const targetId = parseInt(e.target.id) - 1
+      link[targetId - 1].focus()
+    }
   }
 
   listOfEmployees() {
@@ -94,6 +87,7 @@ class AllEmployees extends Component {
               to={`/employee/${e.id}`}
               style={{textDecoration: 'none', color: 'black'}}
               className="Link"
+              id={e.id}
             >
               <Wrapper>
                 <Name>
