@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Container, Row, Col } from 'react-grid-system';
 import Lottie from 'react-lottie';
+import * as animationData from './loader.json'
 import axios from 'axios';
 
-import * as animationData from './loader.json'
 import Filter from './Filter';
 
 const Wrapper = styled.div`
@@ -22,10 +22,6 @@ const Wrapper = styled.div`
   padding: 10px 0;
   cursor: pointer;
   transition: opacity 150ms ease;
-
-  &:focus {
-    background-color: red;
-  }
 `
 
 const Name = styled.h1`
@@ -63,15 +59,23 @@ class AllEmployees extends Component {
     let targetId = parseInt(e.target.id) - 1
     switch(e.keyCode) {
       case 39:
+        targetId === this.state.filteredView.length - 1 ?
+        link[0].focus() :
         link[targetId + 1].focus()
         break;
       case 37:
+        targetId === 0 ?
+        link[this.state.filteredView.length - 1].focus() :
         link[targetId - 1].focus()
         break;
       case 40:
+        targetId === this.state.filteredView.length - 1 ?
+        link[0].focus() :
         link[targetId + 3].focus()
         break;
       case 38:
+        targetId === 0 ?
+        link[this.state.filteredView.length - 1].focus() :
         link[targetId - 3].focus()
         break;
       default:
@@ -80,35 +84,29 @@ class AllEmployees extends Component {
   }
 
   listOfEmployees() {
-    const results = [];
-    while (this.state.filteredView.length) {
-      results.push(this.state.filteredView.splice(0, 3))
-    }
-    return results.map(result =>
+    return this.state.filteredView.map(e =>
       <Row
         style={{display: 'contents'}}
-        // onKeyDown={this.handleKeyPress}
-        // tabIndex="0"
+        onKeyDown={this.handleKeyPress}
+        tabIndex="0"
       >
-        {result.map(e =>
-          <Col sm={4}>
-            <Link
-              to={`/employee/${e.id}`}
-              style={{textDecoration: 'none', color: 'black'}}
-              className="Link"
-              // id={e.id}
-            >
-              <Wrapper>
-                <Name>
-                  {e.name}
-                </Name>
-                <JobTitle>
-                  {e.job_titles}
-                </JobTitle>
-              </Wrapper>
-            </Link>
-          </Col>
-        )}
+        <Col sm={4}>
+          <Link
+            to={`/employee/${e.id}`}
+            style={{textDecoration: 'none', color: 'black'}}
+            className="Link"
+            id={e.id}
+          >
+            <Wrapper>
+              <Name>
+                {e.name}
+              </Name>
+              <JobTitle>
+                {e.job_titles}
+              </JobTitle>
+            </Wrapper>
+          </Link>
+        </Col>
       </Row>
     )
   }
@@ -135,11 +133,9 @@ class AllEmployees extends Component {
           <Container>
             <Row>
               <Col>
-              {console.log("this.state.data\n", this.state.data)}
                 <Filter
                   data={this.state.data}
                   onChange={this.handleChange}
-                  test="testing..."
                 />
               </Col>
             </Row>
