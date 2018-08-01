@@ -56,54 +56,38 @@ class AllEmployees extends Component {
 
   handleKeyPress = (e) => {
     const link = document.getElementsByClassName('Link')
-    let targetId = parseInt(e.target.id)
-    switch(e.keyCode) {
-      case 39:
-        targetId === this.state.filteredView.length - 1 ?
-        link[0].focus() :
-        link[targetId + 1].focus()
-        break;
-      case 37:
-        targetId === 0 ?
-        link[this.state.filteredView.length - 1].focus() :
-        link[targetId - 1].focus()
-        break;
-      case 40:
-        (
-          targetId === this.state.filteredView.length - 1 ||
-          targetId === this.state.filteredView.length - 2 ||
-          targetId === this.state.filteredView.length - 3
-        ) ?
-        link[0].focus() :
-        link[targetId + 3].focus()
-        break;
-      case 38:
-        if (targetId === 0) {
-          link[this.state.filteredView.length - 1].focus()
-        } else if (targetId === 1) {
-          link[this.state.filteredView.length - 2].focus()
-        } else if (targetId === 2) {
-          link[this.state.filteredView.length - 3].focus()
-        }
+    let targetId = parseInt(e.target.id, 10)
 
-        // targetId === 0 ?
-        // link[this.state.filteredView.length - 1].focus() :
-        // link[targetId - 3].focus()
-
-        // targetId === 1 ?
-        // link[this.state.filteredView.length - 2].focus() :
-        // link[targetId - 3].focus()
-
-        // targetId === 2 ?
-        // link[this.state.filteredView.length - 3].focus() :
-        // link[targetId - 3].focus()
-
-        // (targetId === 0 || targetId === 1 || targetId === 2) ?
-        // link[this.state.filteredView.length - 1].focus() :
-        // link[targetId - 3].focus()
-        break;
-      default:
-        break;
+    // Keyboard navigation for desktop view only
+    if (window.innerWidth > 992) {
+      switch(e.keyCode) {
+        case 39:
+          targetId === this.state.filteredView.length - 1 ?
+          link[0].focus() :
+          link[targetId + 1].focus()
+          break;
+        case 37:
+          targetId === 0 ?
+          link[this.state.filteredView.length - 1].focus() :
+          link[targetId - 1].focus()
+          break;
+        case 40:
+          (
+            targetId === this.state.filteredView.length - 1 ||
+            targetId === this.state.filteredView.length - 2 ||
+            targetId === this.state.filteredView.length - 3
+          ) ?
+          link[0].focus() :
+          link[targetId + 3].focus()
+          break;
+        case 38:
+          targetId === 0 || targetId === 1 || targetId === 2 ?
+          link[this.state.filteredView.length - 1].focus() :
+          link[targetId - 3].focus()
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -114,7 +98,7 @@ class AllEmployees extends Component {
         onKeyDown={this.handleKeyPress}
         tabIndex="0"
       >
-        <Col sm={4}>
+        <Col md={6} lg={4}>
           <Link
             to={`/employee/${employee.id}`}
             style={{textDecoration: 'none', color: 'black'}}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import styled from 'styled-components'
 import { Container, Row, Col } from 'react-grid-system';
@@ -28,12 +28,18 @@ class AboutEmployee extends Component {
     super()
     this.state = {
       loading: true,
-      filteredView: null,
     }
   }
   componentDidMount() {
-    const employeeId = document.location.pathname.split('/')[2]
-    axios.get(`https://dt-interviews.appspot.com/${employeeId}`)
+    const currentEmployeeId = parseInt(this.props.history.location.pathname.split('/')[2], 10)
+    window.addEventListener("keydown", event => {
+      if (event.keyCode === 40) {
+        console.log("down")
+        // this.props.history.push(`/employee/${currentEmployeeId - 1}`, null)
+        // window.location.reload()
+      }
+    });
+    axios.get(`https://dt-interviews.appspot.com/${currentEmployeeId}`)
     .then(res => {
       this.setState({
         loading: false,
@@ -85,7 +91,9 @@ class AboutEmployee extends Component {
         {!this.state.loading &&
           <Container>
             <Row>
-              {this.employeeDetails()}
+              <Col>
+                {this.employeeDetails()}
+              </Col>
             </Row>
           </Container>
         }
@@ -94,4 +102,4 @@ class AboutEmployee extends Component {
   }
 }
 
-export default AboutEmployee;
+export default withRouter(AboutEmployee);
