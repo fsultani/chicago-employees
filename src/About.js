@@ -95,6 +95,13 @@ class About extends Component {
             })
           })
         }
+      } else if (event.keyCode === 13) {
+        this.props.history.push({
+          pathname: '/',
+          state: {
+            currentEmployeeId: this.state.currentEmployeeId,
+          }
+        })
       }
     });
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Container, Row, Col } from 'react-grid-system';
@@ -40,6 +41,7 @@ class AllEmployees extends Component {
     }
   }
   componentDidMount() {
+    console.log("this.props.location.state.currentEmployeeId\n", this.props.location.state.currentEmployeeId)
     axios.get('https://dt-interviews.appspot.com')
     .then(res => this.setState({
       loading: false,
@@ -157,4 +159,4 @@ class AllEmployees extends Component {
   }
 }
 
-export default AllEmployees;
+export default withRouter(AllEmployees);
