@@ -23,29 +23,80 @@ const Field = styled.p`
   text-align: left;
 `
 
-class AboutEmployee extends Component {
-  constructor() {
+class About extends Component {
+  constructor(props) {
     super()
     this.state = {
       loading: true,
+      totalCount: null,
+      currentEmployeeId: parseInt(props.location.pathname.split('/')[2], 10)
     }
   }
   componentDidMount() {
-    const currentEmployeeId = parseInt(this.props.history.location.pathname.split('/')[2], 10)
-    window.addEventListener("keydown", event => {
-      if (event.keyCode === 40) {
-        console.log("down")
-        // this.props.history.push(`/employee/${currentEmployeeId - 1}`, null)
-        // window.location.reload()
-      }
-    });
-    axios.get(`https://dt-interviews.appspot.com/${currentEmployeeId}`)
+    Promise.all([
+      axios.get(`https://dt-interviews.appspot.com/${this.state.currentEmployeeId}`),
+      axios.get('https://dt-interviews.appspot.com')
+    ]).then(([ currentEmployee, totalCount ]) => {
+      this.setState({
+        loading: false,
+        totalCount: totalCount.data.length,
+        ...currentEmployee.data,
+      })
+    })
+    axios.get(`https://dt-interviews.appspot.com/${this.state.currentEmployeeId}`)
     .then(res => {
       this.setState({
         loading: false,
         ...res.data,
       })
     })
+    window.addEventListener("keydown", event => {
+      if (event.keyCode === 40) {
+        if (this.state.totalCount === this.state.currentEmployeeId) {
+          this.props.history.push('/employee/1')
+          axios.get('https://dt-interviews.appspot.com/1')
+          .then(res => {
+            this.setState({
+              loading: false,
+              currentEmployeeId: 1,
+              ...res.data,
+            })
+          })
+        } else {
+          this.props.history.push(`/employee/${this.state.currentEmployeeId + 1}`)
+          axios.get(`https://dt-interviews.appspot.com/${this.state.currentEmployeeId + 1}`)
+          .then(res => {
+            this.setState({
+              loading: false,
+              currentEmployeeId: this.state.currentEmployeeId + 1,
+              ...res.data,
+            })
+          })
+        }
+      } else if (event.keyCode === 38) {
+        if (this.state.currentEmployeeId === 1) {
+          this.props.history.push(`/employee/${this.state.totalCount}`)
+          axios.get(`https://dt-interviews.appspot.com/${this.state.totalCount}`)
+          .then(res => {
+            this.setState({
+              loading: false,
+              currentEmployeeId: this.state.totalCount,
+              ...res.data,
+            })
+          })
+        } else {
+          this.props.history.push(`/employee/${this.state.currentEmployeeId - 1}`)
+          axios.get(`https://dt-interviews.appspot.com/${this.state.currentEmployeeId - 1}`)
+          .then(res => {
+            this.setState({
+              loading: false,
+              currentEmployeeId: this.state.currentEmployeeId - 1,
+              ...res.data,
+            })
+          })
+        }
+      }
+    });
   }
 
   employeeDetails() {
@@ -102,4 +153,4 @@ class AboutEmployee extends Component {
   }
 }
 
-export default withRouter(AboutEmployee);
+export default withRouter(About);
