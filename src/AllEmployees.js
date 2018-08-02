@@ -41,7 +41,6 @@ class AllEmployees extends Component {
     }
   }
   componentDidMount() {
-    console.log("this.props.location.state.currentEmployeeId\n", this.props.location.state.currentEmployeeId)
     axios.get('https://dt-interviews.appspot.com')
     .then(res => this.setState({
       loading: false,
