@@ -156,6 +156,13 @@ class AllEmployees extends Component {
                   onChange={this.handleChange}
                 />
               </Col>
+              <Col>
+                <Link
+                  to={'/add'}
+                  style={{textDecoration: 'none', color: 'black'}}
+                >Add new employee
+                </Link>
+              </Col>
             </Row>
             <Row ref={this.getRef} id="employeeRow">
               {this.listOfEmployees()}

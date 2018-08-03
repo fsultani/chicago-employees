@@ -4,6 +4,7 @@ import createBrowserHistory from 'history/createBrowserHistory'
 
 import MainApp from './MainApp';
 import About from './About';
+import AddNewEmployee from './AddNewEmployee';
 
 const history = createBrowserHistory()
 const App = () => (
@@ -11,6 +12,7 @@ const App = () => (
     <div>
       <Route exact path='/' component={MainApp} />
       <Route path='/employee' component={About} />
+      <Route path='/add' component={AddNewEmployee} />
     </div>
   </Router>
 )
