@@ -46,7 +46,7 @@ class AllEmployees extends Component {
       loading: false,
       data: res.data,
       filteredView: res.data,
-      focusedEmployee: this.props.history.location.state ? this.props.history.location.state.currentEmployeeId : null
+      focusedEmployee: this.props.history.location.state ? this.props.history.location.state.currentEmployeeId : 1
     }))
   }
 
@@ -95,7 +95,7 @@ class AllEmployees extends Component {
 
   getRef = () => {
     const getElement = document.getElementById('employeeRow')
-    if (this.state.focusedEmployee) {
+    if (this.state.focusedEmployee && getElement.childNodes.length === 100) {
       const setFocus = getElement.childNodes[this.state.focusedEmployee - 1].firstChild.firstChild
       setFocus.focus()
     }

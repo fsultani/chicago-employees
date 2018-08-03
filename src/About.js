@@ -43,57 +43,18 @@ class About extends Component {
         ...currentEmployee.data,
       })
     })
-    axios.get(`https://dt-interviews.appspot.com/${this.state.currentEmployeeId}`)
-    .then(res => {
-      this.setState({
-        loading: false,
-        ...res.data,
-      })
-    })
     window.addEventListener("keydown", event => {
       if (event.keyCode === 40) {
         if (this.state.totalCount === this.state.currentEmployeeId) {
-          this.props.history.push('/employee/1')
-          axios.get('https://dt-interviews.appspot.com/1')
-          .then(res => {
-            this.setState({
-              loading: false,
-              currentEmployeeId: 1,
-              ...res.data,
-            })
-          })
+          this.getEmployeeInfo('1')
         } else {
-          this.props.history.push(`/employee/${this.state.currentEmployeeId + 1}`)
-          axios.get(`https://dt-interviews.appspot.com/${this.state.currentEmployeeId + 1}`)
-          .then(res => {
-            this.setState({
-              loading: false,
-              currentEmployeeId: this.state.currentEmployeeId + 1,
-              ...res.data,
-            })
-          })
+          this.getEmployeeInfo(this.state.currentEmployeeId + 1)
         }
       } else if (event.keyCode === 38) {
         if (this.state.currentEmployeeId === 1) {
-          this.props.history.push(`/employee/${this.state.totalCount}`)
-          axios.get(`https://dt-interviews.appspot.com/${this.state.totalCount}`)
-          .then(res => {
-            this.setState({
-              loading: false,
-              currentEmployeeId: this.state.totalCount,
-              ...res.data,
-            })
-          })
+          this.getEmployeeInfo(this.state.totalCount)
         } else {
-          this.props.history.push(`/employee/${this.state.currentEmployeeId - 1}`)
-          axios.get(`https://dt-interviews.appspot.com/${this.state.currentEmployeeId - 1}`)
-          .then(res => {
-            this.setState({
-              loading: false,
-              currentEmployeeId: this.state.currentEmployeeId - 1,
-              ...res.data,
-            })
-          })
+          this.getEmployeeInfo(this.state.currentEmployeeId - 1)
         }
       } else if (event.keyCode === 13) {
         this.props.history.push({
@@ -102,8 +63,21 @@ class About extends Component {
             currentEmployeeId: this.state.currentEmployeeId,
           }
         })
+        window.location.reload()
       }
     });
+  }
+
+  getEmployeeInfo = (employeeId) => {
+    this.props.history.push(`/employee/${employeeId}`)
+    axios.get(`https://dt-interviews.appspot.com/${employeeId}`)
+    .then(res => {
+      this.setState({
+        loading: false,
+        currentEmployeeId: employeeId,
+        ...res.data,
+      })
+    })
   }
 
   employeeDetails() {
