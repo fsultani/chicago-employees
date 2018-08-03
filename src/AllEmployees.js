@@ -46,6 +46,7 @@ class AllEmployees extends Component {
       loading: false,
       data: res.data,
       filteredView: res.data,
+      focusedEmployee: this.props.history.location.state ? this.props.history.location.state : null
     }))
   }
 
@@ -90,6 +91,12 @@ class AllEmployees extends Component {
           break;
       }
     }
+  }
+
+  getRef = () => {
+    const getElement = document.getElementById('employeeRow')
+    const setFocus = getElement.childNodes[this.state.focusedEmployee.currentEmployeeId - 1].firstChild.firstChild
+    setFocus.focus()
   }
 
   listOfEmployees() {
@@ -148,7 +155,7 @@ class AllEmployees extends Component {
                 />
               </Col>
             </Row>
-            <Row>
+            <Row ref={this.getRef} id="employeeRow">
               {this.listOfEmployees()}
             </Row>
           </Container>
