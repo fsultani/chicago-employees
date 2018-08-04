@@ -182,13 +182,13 @@ class AllEmployees extends Component {
               </div>
             </Copy>
             <Row>
-              <Col>
+              <Col md={6} lg={6}>
                 <Filter
                   data={this.state.data}
                   onChange={this.handleChange}
                 />
               </Col>
-              <Col style={{padding: '10px 0'}}>
+              <Col style={{padding: '10px 0'}} md={6} lg={6} >
                 <ButtonLink
                   to={'/add'}
                 >

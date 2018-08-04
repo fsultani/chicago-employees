@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
 import axios from 'axios';
+import { Container, Row, Col } from 'react-grid-system';
 
 const Title = styled.div`
   padding: 10px 0;
@@ -19,12 +20,9 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `
 
-const Container = styled.div`
-  padding: 50px;
+const Wrapper = styled.div`
   margin: 0 auto;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 800px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,34 +89,50 @@ class AddEmployee extends Component {
   }
   render() {
     return (
-      <Container>
-        <Title>Add new employee</Title>
-        <form onSubmit={this.handleSubmit}>
-          <Label>
-            First name
-          </Label>
-          <input type="text" value={this.state.firstname} onChange={this.handleFirstName} required/>
-          <Label>
-            Last name
-          </Label>
-          <input type="text" value={this.state.lastname} onChange={this.handleLastName}  required/>
-          <Label>
-            Title
-          </Label>
-          <input type="text" value={this.state.title} onChange={this.handleTitle} required/>
-          <Label>
-            Salary
-          </Label>
-          <input type="text" value={this.state.salary} onChange={this.handleSalary} required/>
-          <Label>
-            Department
-          </Label>
-          <input type="text" value={this.state.department} onChange={this.handleDepartment} required/>
-          <SubmitButton type="submit">
-            Submit
-          </SubmitButton>
+      <Wrapper>
+      <Title>Add new employee</Title>
+      <form onSubmit={this.handleSubmit}>
+        <Row>
+          <Col md={6} lg={6}>
+            <Label>
+              First name
+            </Label>
+            <input type="text" value={this.state.firstname} onChange={this.handleFirstName} required/>
+          </Col>
+          <Col md={6} lg={6}>
+            <Label>
+              Last name
+            </Label>
+            <input type="text" value={this.state.lastname} onChange={this.handleLastName}  required/>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={6} lg={6}>
+            <Label>
+              Title
+            </Label>
+            <input type="text" value={this.state.title} onChange={this.handleTitle} required/>
+          </Col>
+          <Col md={6} lg={6}>
+            <Label>
+              Salary
+            </Label>
+            <input type="text" value={this.state.salary} onChange={this.handleSalary} required/>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={6} lg={6}>
+            <Label>
+              Department
+            </Label>
+            <input type="text" value={this.state.department} onChange={this.handleDepartment} required/>
+          </Col>
+        </Row>
+        <SubmitButton type="submit">
+          Submit
+        </SubmitButton>
         </form>
-      </Container>
+      </Wrapper>
     );
   }
 }
