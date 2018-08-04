@@ -9,6 +9,11 @@ import axios from 'axios';
 
 import Filter from './Filter';
 
+const Copy = styled.div`
+  font-size: 18px;
+  margin: 0 auto;
+  padding: 10px 0;
+`
 const Wrapper = styled.div`
   width: 100%;
   background: #D3D3D3;
@@ -31,6 +36,19 @@ const Name = styled.h1`
 
 const JobTitle = styled.p`
   font-size: 12px;
+`
+
+const AddButton = styled.button`
+  display: inline-block;
+  margin: 0 auto;
+  padding: 20px;
+  cursor: pointer;
+`
+
+const ButtonLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  margin: 0 auto;
 `
 class AllEmployees extends Component {
   constructor() {
@@ -149,6 +167,20 @@ class AllEmployees extends Component {
         }
         {!this.state.loading &&
           <Container>
+            <Copy>
+              <div>
+                To view an employee, simply click on their name.
+              </div>
+              <div>
+                Select the dropdown below to filter by department.
+              </div>
+              <div>
+                You may also navigate with the keyboard.
+              </div>
+              <div>
+                To add a new employee, use the button to the right.
+              </div>
+            </Copy>
             <Row>
               <Col>
                 <Filter
@@ -156,12 +188,14 @@ class AllEmployees extends Component {
                   onChange={this.handleChange}
                 />
               </Col>
-              <Col>
-                <Link
+              <Col style={{padding: '10px 0'}}>
+                <ButtonLink
                   to={'/add'}
-                  style={{textDecoration: 'none', color: 'black'}}
-                >Add new employee
-                </Link>
+                >
+                  <AddButton>
+                    Add new employee
+                  </AddButton>
+                </ButtonLink>
               </Col>
             </Row>
             <Row ref={this.getRef} id="employeeRow">

@@ -7,6 +7,13 @@ import Lottie from 'react-lottie';
 import * as animationData from './loader.json'
 import axios from 'axios';
 
+const Copy = styled.div`
+  font-size: 18px;
+  margin: 0 auto;
+  padding: 10px 0;
+  text-align: center;
+`
+
 const Wrapper = styled.div`
   width: 100%;
   background: #D3D3D3;
@@ -46,7 +53,7 @@ class About extends Component {
     window.addEventListener("keydown", event => {
       if (event.keyCode === 40) {
         if (this.state.totalCount === this.state.currentEmployeeId) {
-          this.getEmployeeInfo('1')
+          this.getEmployeeInfo(1)
         } else {
           this.getEmployeeInfo(this.state.currentEmployeeId + 1)
         }
@@ -82,23 +89,33 @@ class About extends Component {
 
   employeeDetails() {
     return (
-      <Wrapper>
-        <Field>
-          ID: {this.state.id}
-        </Field>
-        <Field>
-          Name: {this.state.name}
-        </Field>
-        <Field>
-          Job Title: {this.state.job_titles}
-        </Field>
-        <Field>
-          Salary: {this.state.employee_annual_salary}
-        </Field>
-        <Field>
-          Department: {this.state.department}
-        </Field>
-      </Wrapper>
+      <div>
+        <Copy>
+          <div>
+            Use the up and down arrow keys to view the previous and next employee, respectively.
+          </div>
+          <div>
+            To go back to the home page, simply press the Enter key.
+          </div>
+        </Copy>
+        <Wrapper>
+          <Field>
+            ID: {this.state.id}
+          </Field>
+          <Field>
+            Name: {this.state.name}
+          </Field>
+          <Field>
+            Job Title: {this.state.job_titles}
+          </Field>
+          <Field>
+            Salary: {this.state.employee_annual_salary}
+          </Field>
+          <Field>
+            Department: {this.state.department}
+          </Field>
+        </Wrapper>
+      </div>
     )
   }
 
