@@ -3,6 +3,7 @@
 - Clone the repo: `git clone https://github.com/fsultani/chicago-employees.git`
 - `cd` into the directory: `cd chicago-employees`
 - Install dependencies with `npm install`
+- Start the app with `npm start`
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
