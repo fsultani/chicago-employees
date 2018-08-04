@@ -1,4 +1,6 @@
-To view this app, do the following...
+##Usage
+
+1. Clone the repo: `git clone https://github.com/fsultani/chicago-employees.git`
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
